@@ -4,6 +4,9 @@
   "main": "index.js",
   "author": "salihfsimsek",
   "license": "MIT",
+  "scripts": {
+    "start": "nodemon v1/src/index.js"
+  },
   "dependencies": {
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
@@ -11,5 +14,8 @@
     "http-status": "^1.5.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.4"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
   }
 }
