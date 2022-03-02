@@ -1,0 +1,15 @@
+{
+  "name": "eventier-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "salihfsimsek",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "helmet": "^5.0.2",
+    "http-status": "^1.5.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.2.4"
+  }
+}
