@@ -24,7 +24,11 @@ const UserSchema = mongoose.Schema({
     profile_image: {
         type: String,
         required: true
-    }
+    },
+    events: [{
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: 'event'
+    }]
 },{timestamps: true, versionKey: false})
 
 const UserModel = mongoose.model('user', UserSchema)
