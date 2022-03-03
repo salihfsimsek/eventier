@@ -19,3 +19,5 @@ class BaseService{
         return this.model.deleteOne(where)
     }
 }
+
+module.exports = BaseService
