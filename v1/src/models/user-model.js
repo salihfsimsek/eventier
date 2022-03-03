@@ -22,8 +22,7 @@ const UserSchema = mongoose.Schema({
         required: true
     },
     profile_image: {
-        type: String,
-        required: true
+        type: String
     },
     events: [{
         type: mongoose.SchemaTypes.ObjectId,
