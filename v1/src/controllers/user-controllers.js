@@ -37,4 +37,11 @@ const login = async (req, res, next) => {
     }
 }
 
-module.exports = {create, login}
+const changePassword = async (req, res, next) => {
+    const newPassword = passwordToHash(req.body.password)
+
+    const updatedUser = await UserService.update({_id: req.user.id}, {password: newPassword})
+    res.status(200).send(updatedUser)
+}
+
+module.exports = {create, login, changePassword}

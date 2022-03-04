@@ -1,5 +1,7 @@
 const CryptoJS = require('crypto-js')
+
 const jwt = require('jsonwebtoken')
+
 const passwordToHash = (password) => {
     return CryptoJS.HmacSHA256(password, CryptoJS.HmacSHA1(password, process.env.PASSWORD_HASH_KEY).toString()).toString()
 }

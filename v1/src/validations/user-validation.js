@@ -14,4 +14,9 @@ const loginValidation = Joi.object({
     password: Joi.string().required()
 }).xor('email', 'username')
 
-module.exports = {createValidation, loginValidation}
+const changePasswordValidation = Joi.object({
+    password: Joi.string().required().min(8),
+    c_password: Joi.string().valid(Joi.ref('password')).required()
+})
+
+module.exports = {createValidation, loginValidation, changePasswordValidation}
