@@ -8,4 +8,10 @@ const createValidation = Joi.object({
     phone_number: Joi.string().required(),
 })
 
-module.exports = {createValidation}
+const loginValidation = Joi.object({
+    email: Joi.string().email(),
+    username: Joi.string().alphanum(),
+    password: Joi.string().required()
+}).xor('email', 'username')
+
+module.exports = {createValidation, loginValidation}
