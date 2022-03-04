@@ -6,6 +6,6 @@ const {create} = require('../controllers/user-controllers')
 const validate = require('../middlewares/validate')
 const {createValidation} = require('../validations/user-validation')
 
-router.post('/', validate(createValidation) ,create)
+router.post('/',create)
 
 module.exports = router

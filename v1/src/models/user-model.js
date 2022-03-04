@@ -7,7 +7,8 @@ const UserSchema = mongoose.Schema({
     },
     username: {
         type: String,
-        required: false
+        unique: [true, 'Username already in use'],
+        required: true
     },
     password: {
         type: String,
@@ -15,10 +16,12 @@ const UserSchema = mongoose.Schema({
     },
     email: {
         type: String,
+        unique: true,
         required: true
     },
     phone_number: {
         type: String,
+        unique: true,
         required: true
     },
     profile_image: {
