@@ -37,11 +37,24 @@ const login = async (req, res, next) => {
     }
 }
 
+const update = async (req, res, next) => {
+    try{
+        const updatedUser = await UserService.update({_id: req.user.id}, req.body)
+        res.status(200).send(updatedUser)
+    }catch(err){
+        next(err)
+    }
+}
+
 const changePassword = async (req, res, next) => {
     const newPassword = passwordToHash(req.body.password)
 
-    const updatedUser = await UserService.update({_id: req.user.id}, {password: newPassword})
-    res.status(200).send(updatedUser)
+    try{
+        const updatedUser = await UserService.update({_id: req.user.id}, {password: newPassword})
+        res.status(200).send(updatedUser)
+    }catch(err){
+        next(err)
+    }
 }
 
-module.exports = {create, login, changePassword}
+module.exports = {create, login, update, changePassword}
