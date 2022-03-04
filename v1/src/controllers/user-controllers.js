@@ -57,4 +57,23 @@ const changePassword = async (req, res, next) => {
     }
 }
 
-module.exports = {create, login, update, changePassword}
+const getAllUsers = async (req, res, next) => {
+    try{
+        const allUsers = await UserService.list()
+        res.status(200).send(allUsers)
+    }catch(err){
+        next(err)
+    }
+}
+
+const getUser = async (req, res, next) => {
+    let id = req.params.id
+    try{
+        const user = await UserService.findOne({_id: id})
+        res.status(200).send(user)
+    }catch(err){
+        next(err)
+    }
+}
+
+module.exports = {create, login, update, changePassword, getAllUsers, getUser}
