@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const config = require('./configs/index')
 const loaders = require('./loaders/index')
 const helmet = require('helmet')
@@ -19,6 +20,8 @@ const app = express()
 
 app.use(express.json())
 app.use(helmet())
+app.use('/uploads/', express.static(path.join(__dirname, './uploads')))
+
 
 app.use('/api/users',userRoutes)
 

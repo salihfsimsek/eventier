@@ -76,4 +76,17 @@ const getUser = async (req, res, next) => {
     }
 }
 
-module.exports = {create, login, update, changePassword, getAllUsers, getUser}
+const updateProfilePicture = async (req, res, next) => {
+    if(req.file)
+        req.body.profile_picture = `${process.env.BACKEND_FILE_URL}${req.file.filename}`
+    else req.body.profile_picture = null
+    
+    try{
+        const updatedProfile = await UserService.update({_id: req.user.id}, req.body)
+        res.status(200).send(updatedProfile)
+    }catch(err){
+        next(err)
+    }
+}
+
+module.exports = {create, login, update, changePassword, getAllUsers, getUser, updateProfilePicture}

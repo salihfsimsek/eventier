@@ -24,7 +24,7 @@ const UserSchema = mongoose.Schema({
         unique: true,
         required: true
     },
-    profile_image: {
+    profile_picture: {
         type: String
     },
     events: [{
