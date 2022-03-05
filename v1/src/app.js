@@ -5,7 +5,7 @@ const loaders = require('./loaders/index')
 const helmet = require('helmet')
 
 //Routes
-const {userRoutes} = require('./routes/index')
+const {userRoutes, eventRoutes} = require('./routes/index')
 
 //Error handle middleware
 const errorHandler = require('./middlewares/errorHandler')
@@ -24,7 +24,7 @@ app.use('/uploads/', express.static(path.join(__dirname, './uploads')))
 
 
 app.use('/api/users',userRoutes)
-
+app.use('/api/events', eventRoutes)
 //Error handling
 app.use(errorHandler)
 

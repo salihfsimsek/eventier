@@ -19,4 +19,5 @@ router.get('/:id', authenticateToken, getUser)
 router.post('/login', validate(loginValidation), login)
 router.patch('/change-password', authenticateToken, validate(changePasswordValidation) ,changePassword)
 router.patch('/profile-picture', authenticateToken, upload.single('profile_picture'),updateProfilePicture)
+
 module.exports = router
