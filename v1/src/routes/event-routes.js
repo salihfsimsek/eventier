@@ -1,7 +1,7 @@
 const router = require('express').Router()
 
 
-const {getAllEvents, getEvent, create, update} = require('../controllers/event-controllers')
+const {getAllEvents, getEvent, create, update, deleteEvent} = require('../controllers/event-controllers')
 
 //Validators
 const validate = require('../middlewares/validate')
@@ -12,6 +12,7 @@ const authenticateToken = require('../middlewares/auhenticate')
 
 router.get('/', authenticateToken, getAllEvents)
 router.get('/:id', authenticateToken, getEvent)
+router.delete("/:id", authenticateToken, deleteEvent)
 router.patch('/:id', authenticateToken, validate(updateValidation), update)
 router.post('/', authenticateToken, validate(createValidation), create)
 module.exports = router

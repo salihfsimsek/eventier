@@ -40,4 +40,15 @@ const update = async (req, res, next) => {
     }
 }
 
-module.exports = {getAllEvents, getEvent, create, update}
+const deleteEvent = async (req, res, next) => {
+    const id = req.params.id
+    try{
+        const deletedEvent = await EventService.deleteOne({_id: id})
+        if(deletedEvent.deletedCount === 0) return next({message: 'Event not found', status: 404})
+        res.status(200).send({message: 'Event deleted successfully'})
+    }catch(err){
+        next(err)
+    }
+}
+
+module.exports = {getAllEvents, getEvent, create, update, deleteEvent}
