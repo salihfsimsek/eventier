@@ -95,6 +95,7 @@ const getUsersEvents = async (req, res, next) => {
     try{
         const selectedUser = await UserService.findOne({_id: id})
         if(!selectedUser) return next({message: "User not found", status: 404})
+        await selectedUser.populate('events')
         res.status(200).send({events: selectedUser.events})
     }catch(err){
         next(err)
