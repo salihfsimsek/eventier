@@ -51,4 +51,28 @@ const deleteEvent = async (req, res, next) => {
     }
 }
 
-module.exports = {getAllEvents, getEvent, create, update, deleteEvent}
+const updateParticipants = async (req, res, next) => {
+    const user = req.user.id
+    const event = req.params.id
+    try{
+        let selectedEvent = await EventService.findOne({_id: event})
+        //Get participants list from selected event
+        const participantList = selectedEvent.participants
+
+        //If user in participants list, we will remove user from the list
+        if(participantList.includes(user)){
+            let updatedEvent = await EventService.update({ _id: event }, { $pull: { participants: user } })
+            res.status(200).send(updatedEvent)
+        }
+        //Else we will add user to the participants list
+        else{
+            let updatedEvent = await EventService.update({ _id: event }, { $push: { participants: user}})
+            res.status(200).send(updatedEvent)
+        }
+
+    }catch(err){
+        next(err)
+    }
+}
+
+module.exports = {getAllEvents, getEvent, create, update, deleteEvent, updateParticipants}
