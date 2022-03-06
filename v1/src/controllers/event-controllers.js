@@ -1,4 +1,5 @@
 const EventService = require('../services/event-service')
+const UserService = require('../services/user-service')
 
 const getAllEvents = async (req, res, next) => {
     try{
@@ -59,14 +60,17 @@ const updateParticipants = async (req, res, next) => {
         //Get participants list from selected event
         const participantList = selectedEvent.participants
 
-        //If user in participants list, we will remove user from the list
+        // In both cases we have to update the user's event list.
+        //If user in participants list, we will remove user from the list. We m
         if(participantList.includes(user)){
             let updatedEvent = await EventService.update({ _id: event }, { $pull: { participants: user } })
+            await UserService.update({_id: user},{$pull: {events: event}})
             res.status(200).send(updatedEvent)
         }
         //Else we will add user to the participants list
         else{
             let updatedEvent = await EventService.update({ _id: event }, { $push: { participants: user}})
+            await UserService.update({_id: user}, {$push: {events: event}})
             res.status(200).send(updatedEvent)
         }
 

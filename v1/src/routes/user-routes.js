@@ -1,6 +1,6 @@
 const router = require('express').Router()
 
-const {create, login, update, changePassword, getAllUsers, getUser, updateProfilePicture} = require('../controllers/user-controllers')
+const {create, login, update, changePassword, getAllUsers, getUser, updateProfilePicture, getUsersEvents} = require('../controllers/user-controllers')
 
 //Validators
 const validate = require('../middlewares/validate')
@@ -19,5 +19,5 @@ router.get('/:id', authenticateToken, getUser)
 router.post('/login', validate(loginValidation), login)
 router.patch('/change-password', authenticateToken, validate(changePasswordValidation) ,changePassword)
 router.patch('/profile-picture', authenticateToken, upload.single('profile_picture'),updateProfilePicture)
-
+router.get('/users-events/:id', authenticateToken, getUsersEvents)
 module.exports = router

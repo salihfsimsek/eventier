@@ -89,4 +89,16 @@ const updateProfilePicture = async (req, res, next) => {
     }
 }
 
-module.exports = {create, login, update, changePassword, getAllUsers, getUser, updateProfilePicture}
+const getUsersEvents = async (req, res, next) => {
+    const id = req.params.id
+
+    try{
+        const selectedUser = await UserService.findOne({_id: id})
+        if(!selectedUser) return next({message: "User not found", status: 404})
+        res.status(200).send({events: selectedUser.events})
+    }catch(err){
+        next(err)
+    }
+}
+
+module.exports = {create, login, update, changePassword, getAllUsers, getUser, updateProfilePicture, getUsersEvents}
