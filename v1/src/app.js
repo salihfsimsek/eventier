@@ -3,7 +3,7 @@ const path = require('path');
 const config = require('./configs/index')
 const loaders = require('./loaders/index')
 const helmet = require('helmet')
-
+const events = require('./scripts/events')
 //Routes
 const {userRoutes, eventRoutes} = require('./routes/index')
 
@@ -15,6 +15,8 @@ config()
 
 //Running important parts of app on start application 
 loaders()
+
+events()
 
 const app = express()
 

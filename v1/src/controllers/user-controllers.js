@@ -2,6 +2,9 @@ const UserService = require('../services/user-service')
 
 const {passwordToHash, generateAccessToken, generateRefreshToken} = require('../scripts/utils/helper')
 
+const eventEmitter = require('../scripts/events/eventEmitter')
+const uuid = require('uuid')
+
 const create = async (req,res,next) => {
     req.body.password = passwordToHash(req.body.password)
     try{
@@ -57,6 +60,25 @@ const changePassword = async (req, res, next) => {
     }
 }
 
+const resetPassword = async (req, res, next) => {
+    const newPassword = uuid.v4().split('-')[0] || `usr-${new Date().getTime()}`
+
+    try {
+        const updatedUser = await UserService.update({ email: req.body.email }, { password: passwordToHash(newPassword) })
+        if (!updatedUser) return next({message: "User not found", status: 404})
+        eventEmitter.emit('send_email', {
+            to: updatedUser.email,
+            subject: 'Şifre Sıfırlama',
+            html: `Şifre sıfırlama işleminiz gerçekleştirilmiştir. <br/> Giriş yaptıktan sonra şifrenizi sıfırlamayı unutmayın. <br/> Yeni şifreniz: ${newPassword}`
+        })
+        res.status(httpStatus.OK).send({
+            'message': "Şifre sıfırlama işlemi için sisteme kayıtlı email adresine mail gönderilmiştir"
+        })
+    } catch (err) {
+        next(err)
+    }
+}
+
 const getAllUsers = async (req, res, next) => {
     try{
         const allUsers = await UserService.list()
@@ -102,4 +124,4 @@ const getUsersEvents = async (req, res, next) => {
     }
 }
 
-module.exports = {create, login, update, changePassword, getAllUsers, getUser, updateProfilePicture, getUsersEvents}
+module.exports = {create, login, update, changePassword, resetPassword, getAllUsers, getUser, updateProfilePicture, getUsersEvents}
