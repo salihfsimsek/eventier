@@ -15,6 +15,12 @@ const getEvent = async (req, res, next) => {
     try{
         const event = await EventService.findOne({_id: id})
         if(!event) return next({message: 'Event not found', status: 404})
+        
+        await event.populate({
+            path: 'participants',
+            select: 'full_name profile_picture username'
+        })
+
         res.status(200).send(event)
     }catch(err){
         next(err)
