@@ -1,0 +1,86 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "1.0.0",
+    "title": "APIs Document",
+    "description": "your description here",
+    "termsOfService": "",
+    "contact": {
+      "name": "Salih Simsek",
+      "url": "https://salihfsimsek.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/api",
+      "description": "Local server"
+    }
+  ],
+  "components": {
+    "schemas": {},
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Users",
+      "description": "API for Users Endpoints"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "API Endpoint user list",
+        "description": "Fetch all users in database",
+        "parameters": [
+          {
+            "name": "user",
+            "description": "User params to regitser new user",
+            "in": "body",
+            "required": "true",
+            "schema": {
+              "$ref": "#definitions/createUser"
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "New user has Created"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "createUser": {
+      "required": ["firstName", "lastName", "email", "password", "username"],
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

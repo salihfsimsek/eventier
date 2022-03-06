@@ -21,4 +21,5 @@ router.post('/reset-password', resetPassword)
 router.patch('/change-password', authenticateToken, validate(changePasswordValidation) ,changePassword)
 router.patch('/profile-picture', authenticateToken, upload.single('profile_picture'),updateProfilePicture)
 router.get('/users-events/:id', authenticateToken, getUsersEvents)
+
 module.exports = router
