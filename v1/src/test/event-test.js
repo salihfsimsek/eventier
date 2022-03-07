@@ -56,9 +56,26 @@ describe('Events', () => {
 
         it('it should return not found error', (done) => {
             const updatedEvent = {title: 'Concert 2'}
-            let fakeId = '62262ce4eded7027849217f3'
-            chai.request(server).patch(`/api/events/${fakeId}`).send(updatedEvent).set({Authorization: process.env.ACCESS_TOKEN}).end((err,res) => {
+            let fakeEventId = '62262ce4eded7027849217f3'
+            chai.request(server).patch(`/api/events/${fakeEventId}`).send(updatedEvent).set({Authorization: process.env.ACCESS_TOKEN}).end((err,res) => {
                 res.should.have.status(404)
+                done()
+            })
+        })
+    })
+
+    describe('/GET get event', () => {
+        it('it should get an event', (done) => {
+            chai.request(server).get(`/api/events/${eventId}`).set({Authorization: process.env.ACCESS_TOKEN}).end((err,res) => {
+                res.should.have.status(200)
+                done()
+            })
+        })
+
+        it('it should return result not found', (done) => {
+            let fakeEventId = '62262ce4eded7027849217f3'
+            chai.request(server).get(`/api/events/${fakeEventId}`).set({Authorization: process.env.ACCESS_TOKEN}).end((err,res) => {
+                res.should.have.status(200)
                 done()
             })
         })
