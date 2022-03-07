@@ -52,7 +52,22 @@
         "produces": ["application/json"],
         "responses": {
           "200": {
-            "description": "New user has Created"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "_id": "asdf12345678",
+                    "full_name": "Salih Simsek",
+                    "username": "salihfsimsek",
+                    "email": "salihfsimsek@gmail.com",
+                    "phone_number": "00000000000",
+                    "profile_picture": null
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -62,22 +77,22 @@
     "createUser": {
       "required": ["firstName", "lastName", "email", "password", "username"],
       "properties": {
-        "_id": {
+        "full_name": {
           "type": "string"
         },
-        "firstName": {
-          "type": "string"
-        },
-        "lastName": {
+        "username": {
           "type": "string"
         },
         "email": {
           "type": "string"
         },
-        "password": {
+        "phone_number": {
           "type": "string"
         },
-        "username": {
+        "profile_picture": {
+          "type": "string"
+        },
+        "password": {
           "type": "string"
         }
       }
