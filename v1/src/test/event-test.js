@@ -75,7 +75,17 @@ describe('Events', () => {
         it('it should return result not found', (done) => {
             let fakeEventId = '62262ce4eded7027849217f3'
             chai.request(server).get(`/api/events/${fakeEventId}`).set({Authorization: process.env.ACCESS_TOKEN}).end((err,res) => {
+                res.should.have.status(404)
+                done()
+            })
+        })
+    })
+
+    describe('/GET get event list', () => {
+        it('it should get all events', (done) => {
+            chai.request(server).get('/api/events').set({Authorization: process.env.ACCESS_TOKEN}).end((err,res) => {
                 res.should.have.status(200)
+                res.body.should.be.a('array')
                 done()
             })
         })

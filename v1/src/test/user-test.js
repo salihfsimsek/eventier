@@ -128,7 +128,7 @@ describe('Users', () => {
     })
 
     describe('/Get Users', () => {
-        it('it should get all the users', (done) => {
+        it('it should get all users', (done) => {
             chai.request(server).get('/api/users').set({Authorization: process.env.ACCESS_TOKEN}).end((err,res) => {
                 res.should.have.status(200)
                 res.body.should.be.a('array')
@@ -139,7 +139,7 @@ describe('Users', () => {
     })
 
     describe('/Patch update users information', () => {
-        it('it should change the users data', (done) => {
+        it('it should change users data', (done) => {
             chai.request(server).patch('/api/users').set({Authorization: process.env.ACCESS_TOKEN}).end((err,res) => {
                 res.should.have.status(200)
                 done()
