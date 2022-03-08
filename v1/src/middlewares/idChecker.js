@@ -5,3 +5,5 @@ const idChecker = (field) => async (req, res, next) => {
     }
     next()
 }
+
+module.exports = idChecker
