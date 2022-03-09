@@ -73,7 +73,7 @@ const resetPassword = async (req, res, next) => {
             subject: 'Şifre Sıfırlama',
             html: `Şifre sıfırlama işleminiz gerçekleştirilmiştir. <br/> Giriş yaptıktan sonra şifrenizi sıfırlamayı unutmayın. <br/> Yeni şifreniz: ${newPassword}`
         })
-        res.status(httpStatus.OK).send({
+        res.status(200).send({
             'message': "Şifre sıfırlama işlemi için sisteme kayıtlı email adresine mail gönderilmiştir"
         })
     } catch (err) {
