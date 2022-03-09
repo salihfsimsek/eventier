@@ -18,11 +18,43 @@ describe('Users', () => {
         it('it should get an access token', (done) => {
             const user = {
                 username: 'salihffsimsek',
-                password: 'simsek123'
+                password: 'user12345'
             }
             chai.request(server).post('/api/users/login').send(user).end((err,res) => {
                 res.should.have.status(201)
                 process.env.ACCESS_TOKEN = `Bearer ${res.body.access_token}`
+                done()
+            })
+        })
+
+        it('it should return wrong information, username', (done) => {
+            const user = {
+                username: 'salihfffsimsek',
+                password: 'user12345'
+            }
+            chai.request(server).post('/api/users/login').send(user).end((err, res) => {
+                res.should.have.status(401)
+                done()
+            })
+        })
+
+        it('it should return wrong information, email', (done) => {
+            const user = {
+                email: 'salihfffsimsek@gmail.com',
+                password: 'user12345'
+            }
+            chai.request(server).post('/api/users/login').send(user).end((err, res) => {
+                res.should.have.status(401)
+                done()
+            })
+        })
+
+        it('it should return validation error, email or username required', (done) => {
+            const user = {
+                password: 'user12345'
+            }
+            chai.request(server).post('/api/users/login').send(user).end((err, res) => {
+                res.should.have.status(400)
                 done()
             })
         })
@@ -35,7 +67,7 @@ describe('Users', () => {
                 username: "salihfsimsek",
                 email: "salihfiratsimsek@gmail.com",
                 phone_number: "00000000000",
-                password: "simsek123"
+                password: "user12345"
             }
             chai.request(server).post('/api/users').send(newUser).end((err,res) => {
                 res.should.have.status(200)
@@ -49,7 +81,7 @@ describe('Users', () => {
                 username: "salihfsimsek",
                 email: "salihfiratsimsek@gmail.com",
                 phone_number: "00000000000",
-                password: "simsek123"
+                password: "user12345"
             }
             chai.request(server).post('/api/users').send(newUser).end((err,res) => {
                 res.should.have.status(200)
@@ -66,7 +98,7 @@ describe('Users', () => {
                 username: "salihfsimsek",
                 email: "salihfiratsimsek.com",
                 phone_number: "00000000000",
-                password: "simsek123"
+                password: "user12345"
             }
             chai.request(server).post('/api/users').send(newUser).end((err,res) => {
                 res.should.have.status(400)
@@ -79,7 +111,7 @@ describe('Users', () => {
                 full_name: "Salih Şimşek",
                 email: "salihfiratsimsek@gmail.com",
                 phone_number: "00000000000",
-                password: "simsek123"
+                password: "user12345"
             }
             chai.request(server).post('/api/users').send(newUser).end((err,res) => {
                 res.should.have.status(400)
@@ -92,7 +124,7 @@ describe('Users', () => {
                 username: 'salihfsimsek',
                 email: "salihfiratsimsek@gmail.com",
                 phone_number: "00000000000",
-                password: "simsek123"
+                password: "user12345"
             }
             chai.request(server).post('/api/users').send(newUser).end((err,res) => {
                 res.should.have.status(400)
@@ -105,7 +137,7 @@ describe('Users', () => {
                 full_name: "Salih Şimşek",
                 username: 'salihfsimsek',
                 email: "salihfiratsimsek@gmail.com",
-                password: "simsek123"
+                password: "user12345"
             }
             chai.request(server).post('/api/users').send(newUser).end((err,res) => {
                 res.should.have.status(400)
@@ -125,6 +157,33 @@ describe('Users', () => {
                 done()
             })
         })
+
+    })
+
+    describe('/Patch update user', () => {
+        it('it should be update the user', (done) => {
+            const newInfos = {
+                full_name: 'Salih Simsek'
+            }
+            chai.request(server).patch('/api/users').send(newInfos).set({Authorization: process.env.ACCESS_TOKEN}).end((err,res) => {
+                res.should.have.status(200)
+                done()
+            })
+        })
+
+        it('it should be return email validation error', (done) => {
+            chai.request(server).patch('/api/users').send({email: 'salihfsimsek@com'}).set({Authorization: process.env.ACCESS_TOKEN}).end((err,res) => {
+                res.should.have.status(400)
+                done()
+            })
+        })
+
+        it('it should be return duplicate email error', (done) => {
+            chai.request(server).patch('/api/users').send({email: 'demoacc@gmail.com'}).set({Authorization: process.env.ACCESS_TOKEN}).end((err,res) => {
+                res.should.have.status(409)
+                done()
+            })
+        })
     })
 
     describe('/Get Users', () => {
@@ -132,16 +191,7 @@ describe('Users', () => {
             chai.request(server).get('/api/users').set({Authorization: process.env.ACCESS_TOKEN}).end((err,res) => {
                 res.should.have.status(200)
                 res.body.should.be.a('array')
-                res.body.length.should.be.eql(1)
-                done()
-            })
-        })
-    })
-
-    describe('/Patch update users information', () => {
-        it('it should change users data', (done) => {
-            chai.request(server).patch('/api/users').set({Authorization: process.env.ACCESS_TOKEN}).end((err,res) => {
-                res.should.have.status(200)
+                // res.body.length.should.be.eql(1)
                 done()
             })
         })

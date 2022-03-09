@@ -43,6 +43,7 @@ const login = async (req, res, next) => {
 const update = async (req, res, next) => {
     try{
         const updatedUser = await UserService.update({_id: req.user.id}, req.body)
+        if(!updatedUser) return next({message: "User not found", status: 404})
         res.status(200).send(updatedUser)
     }catch(err){
         next(err)
