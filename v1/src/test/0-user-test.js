@@ -186,6 +186,33 @@ describe('Users', () => {
         })
     })
 
+    describe('/patch change password', (done) => {
+        let newData = {
+            password: "user12345",
+            c_password: "user12345"
+        }
+        it('it should be update the password', (done) => {
+            chai.request(server).patch('/api/users/change-password').send(newData).set({Authorization: process.env.ACCESS_TOKEN}).end((err,res) => {
+                res.should.have.status(200)
+                done()
+            })
+        })
+
+        it('it should return password and c_password not equal error', (done) => {
+            chai.request(server).patch('/api/users/change-password').send({...newData, c_password: 'user123456'}).set({Authorization: process.env.ACCESS_TOKEN}).end((err,res) => {
+                res.should.have.status(400)
+                done()
+            })
+        })
+
+        it('it should return password not enough long', (done) => {
+            chai.request(server).patch('/api/users/change-password').send({...newData, password: 'user'}).set({Authorization: process.env.ACCESS_TOKEN}).end((err,res) => {
+                res.should.have.status(400)
+                done()
+            })
+        })
+    })
+
     describe('/Get Users', () => {
         it('it should get all users', (done) => {
             chai.request(server).get('/api/users').set({Authorization: process.env.ACCESS_TOKEN}).end((err,res) => {

@@ -55,6 +55,7 @@ const changePassword = async (req, res, next) => {
 
     try{
         const updatedUser = await UserService.update({_id: req.user.id}, {password: newPassword})
+        if(!updatedUser) return next({message: "User not found", status: 404})
         res.status(200).send(updatedUser)
     }catch(err){
         next(err)
