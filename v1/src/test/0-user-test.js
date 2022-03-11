@@ -213,12 +213,28 @@ describe('Users', () => {
         })
     })
 
+    describe('/patch reset password', () => {
+        let user = {email: 'demoacc@gmail.com'}
+        it('it should return success message for email send', (done) => {
+            chai.request(server).post('/api/users/reset-password').send(user).end((err,res) => {
+                res.should.have.status(200)
+                done()
+            })
+        })
+
+        it('it should return user not found error', (done) => {
+            chai.request(server).post('/api/users/reset-password').send({email: 'salihfsimsek@gmail.com'}).end((err,res) => {
+                res.should.have.status(404)
+                done()
+            })
+        })
+    })
+
     describe('/Get Users', () => {
         it('it should get all users', (done) => {
             chai.request(server).get('/api/users').set({Authorization: process.env.ACCESS_TOKEN}).end((err,res) => {
                 res.should.have.status(200)
                 res.body.should.be.a('array')
-                // res.body.length.should.be.eql(1)
                 done()
             })
         })

@@ -4,7 +4,7 @@ const {create, login, update, changePassword, resetPassword, getAllUsers, getUse
 
 //Validators
 const validate = require('../middlewares/validate')
-const {createValidation, loginValidation, updateValidation, changePasswordValidation} = require('../validations/user-validation')
+const {createValidation, loginValidation, updateValidation, changePasswordValidation, resetPasswordValidation} = require('../validations/user-validation')
 const idChecker = require('../middlewares/idChecker')
 
 //Authorization validator
@@ -18,7 +18,7 @@ router.post('/', validate(createValidation), create)
 router.patch('/', authenticateToken, validate(updateValidation), update)
 router.get('/:id', idChecker('id'), authenticateToken, getUser)
 router.post('/login', validate(loginValidation), login)
-router.post('/reset-password', resetPassword) 
+router.post('/reset-password', validate(resetPasswordValidation), resetPassword) 
 router.patch('/change-password', authenticateToken, validate(changePasswordValidation) ,changePassword)
 router.patch('/profile-picture', authenticateToken, upload.single('profile_picture'),updateProfilePicture)
 router.get('/users-events/:id', idChecker('id'), authenticateToken, getUsersEvents)

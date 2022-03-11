@@ -25,4 +25,8 @@ const changePasswordValidation = Joi.object({
     c_password: Joi.string().valid(Joi.ref('password')).required()
 })
 
-module.exports = {createValidation, loginValidation, updateValidation, changePasswordValidation}
+const resetPasswordValidation = Joi.object({
+    email: Joi.string().email().required()
+})
+
+module.exports = {createValidation, loginValidation, updateValidation, changePasswordValidation, resetPasswordValidation}

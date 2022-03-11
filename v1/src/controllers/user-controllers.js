@@ -94,6 +94,7 @@ const getUser = async (req, res, next) => {
     let id = req.params.id
     try{
         const user = await UserService.findOne({_id: id})
+        if(!user) return next({message: "User not found", status: 404})
         res.status(200).send(user)
     }catch(err){
         next(err)
