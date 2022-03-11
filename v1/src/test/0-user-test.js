@@ -239,4 +239,22 @@ describe('Users', () => {
             })
         })
     })
+
+    describe('/get user', () => {
+        let userId = "62290fbc6876df97d8e3e9a2"
+        let fakeUserId = '62290fbc6876df97d8e3e9a3'
+        it('it should return specific user', (done) => {
+            chai.request(server).get(`/api/users/${userId}`).set({Authorization: process.env.ACCESS_TOKEN}).end((err, res) => {
+                res.should.have.status(200)
+                done()
+            })
+        })
+
+        it('it should return not found error', (done) => {
+            chai.request(server).get(`/api/users/${fakeUserId}`).set({Authorization: process.env.ACCESS_TOKEN}).end((err, res) => {
+                res.should.have.status(404)
+                done()
+            })
+        })
+    })   
 })
