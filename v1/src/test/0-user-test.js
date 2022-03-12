@@ -257,4 +257,24 @@ describe('Users', () => {
             })
         })
     })   
+
+    //Update profile picture
+
+    describe('/get users events', () => {
+        let userId = "62290fbc6876df97d8e3e9a2"
+        let fakeUserId = '62290fbc6876df97d8e3e9a3'
+        it('it should return users all events', (done) => {
+            chai.request(server).get(`/api/users/users-events/${userId}`).set({Authorization: process.env.ACCESS_TOKEN}).end((err,res) => {
+                res.should.have.status(200)
+                done()
+            })
+        })
+
+        it('it should return user not found error', (done) => {
+            chai.request(server).get(`/api/users/users-events/${fakeUserId}`).set({Authorization: process.env.ACCESS_TOKEN}).end((err,res) => {
+                res.should.have.status(404)
+                done()
+            })
+        })
+    })
 })
