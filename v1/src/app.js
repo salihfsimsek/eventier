@@ -7,7 +7,7 @@ const events = require('./scripts/events')
 
 //Swagger
 const swaggerUi = require('swagger-ui-express')
-const swaggerDocumentation = require('./swagger/swagger.json')
+const swaggerDocumentation = require('./swagger/swagger')
 
 //Routes
 const {userRoutes, eventRoutes} = require('./routes/index')
