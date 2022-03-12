@@ -63,6 +63,9 @@ const updateParticipants = async (req, res, next) => {
     const event = req.params.id
     try{
         let selectedEvent = await EventService.findOne({_id: event})
+
+        if(!selectedEvent) return next({message: 'Event not found', status: 404})
+
         //Get participants list from selected event
         const participantList = selectedEvent.participants
 

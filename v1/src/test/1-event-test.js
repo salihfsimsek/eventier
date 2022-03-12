@@ -7,7 +7,8 @@ const should = chai.should()
 
 chai.use(chaiHttp)
 
-let eventId = '12345'
+let eventId = ''
+let fakeEventId = '62262ce4eded7027849217f3'
 
 describe('Events', () => {
     // beforeEach((done) => {
@@ -73,7 +74,6 @@ describe('Events', () => {
         })
 
         it('it should return result not found', (done) => {
-            let fakeEventId = '62262ce4eded7027849217f3'
             chai.request(server).get(`/api/events/${fakeEventId}`).set({Authorization: process.env.ACCESS_TOKEN}).end((err,res) => {
                 res.should.have.status(404)
                 done()
@@ -86,6 +86,38 @@ describe('Events', () => {
             chai.request(server).get('/api/events').set({Authorization: process.env.ACCESS_TOKEN}).end((err,res) => {
                 res.should.have.status(200)
                 res.body.should.be.a('array')
+                done()
+            })
+        })
+    })
+
+    describe('/Patch update participants list', () => {
+        it('it should add to participants to the list', (done) => {
+            chai.request(server).patch(`/api/events/update-participants/${eventId}`).set({Authorization: process.env.ACCESS_TOKEN}).end((err,res) => {
+                res.should.have.status(200)
+                done()
+            })
+        })
+
+        it('it should remove to participants to the list', (done) => {
+            chai.request(server).patch(`/api/events/update-participants/${eventId}`).set({Authorization: process.env.ACCESS_TOKEN}).end((err,res) => {
+                res.should.have.status(200)
+                done()
+            })
+        })
+    })
+
+    describe('/delete event', () => {
+        it('it should delete the event', (done) => {
+            chai.request(server).delete(`/api/events/${eventId}`).set({Authorization: process.env.ACCESS_TOKEN}).end((err,res) => {
+                res.should.have.status(200)
+                done()
+            })
+        })
+
+        it('it should return not found error', (done) => {
+            chai.request(server).delete(`/api/events/${fakeEventId}`).set({Authorization: process.env.ACCESS_TOKEN}).end((err,res) => {
+                res.should.have.status(404)
                 done()
             })
         })
