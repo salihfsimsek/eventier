@@ -15,8 +15,6 @@ const {upload} = require('../scripts/utils/uploadHelper')
 
 
 router.get('/', authenticateToken, getAllUsers)
-
-
 router.post('/', validate(createValidation), create)
 router.patch('/', authenticateToken, validate(updateValidation), update)
 router.get('/:id', idChecker('id'), authenticateToken, getUser)

@@ -108,6 +108,7 @@ const updateProfilePicture = async (req, res, next) => {
     
     try{
         const updatedProfile = await UserService.update({_id: req.user.id}, req.body)
+        if(!updatedProfile) return next({message: "User not found", status: 404})
         res.status(200).send(updatedProfile)
     }catch(err){
         next(err)

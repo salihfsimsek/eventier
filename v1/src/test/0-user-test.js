@@ -1,5 +1,6 @@
 const UserModel = require('../models/user-model')
 
+const path = require('path')
 const chai = require('chai')
 const chaiHttp = require('chai-http')
 const server = require('../app')
@@ -258,7 +259,21 @@ describe('Users', () => {
         })
     })   
 
-    //Update profile picture
+    describe('/patch update users profile picture', () => {
+        it('it should be update users profile picture', (done) => {
+            chai.request(server).patch('/api/users/profile-picture').set({Authorization: process.env.ACCESS_TOKEN}).set('Content-Type', 'multipart/form-data').attach('profile_picture', path.resolve(__dirname,'profile-picture.jpeg')).end((err, res) => {
+                res.should.have.status(200)
+                done()
+            })
+        })
+
+        it('it should remove the users profile picture', (done) => {
+            chai.request(server).patch('/api/users/profile-picture').set({Authorization: process.env.ACCESS_TOKEN}).end((err,res) => {
+                res.should.have.status(200)
+                done()
+            })
+        })
+    })
 
     describe('/get users events', () => {
         let userId = "62290fbc6876df97d8e3e9a2"
