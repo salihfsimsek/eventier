@@ -16,12 +16,12 @@ const UserSchema = mongoose.Schema({
     },
     email: {
         type: String,
-        unique: true,
+        unique: [true, 'Password already in use'],
         required: true
     },
     phone_number: {
         type: String,
-        unique: true,
+        unique: [true, 'Phone number already in use'],
         required: true
     },
     profile_picture: {
